@@ -451,10 +451,8 @@ export function registerCliHandlers(socket: SocketWithData, deps: CliHandlersDep
     }
 
     socket.on('machine-update-metadata', handleMachineMetadataUpdate)
-    socket.on('update-machine-metadata', handleMachineMetadataUpdate)
 
     socket.on('machine-update-state', handleMachineStateUpdate)
-    socket.on('update-machine-state', handleMachineStateUpdate)
 
     socket.on('ping', (callback: () => void) => {
         callback()
