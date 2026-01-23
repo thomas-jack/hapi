@@ -17,6 +17,7 @@ export const codexCommand: CommandDefinition = {
                 codexArgs?: string[]
                 permissionMode?: CodexPermissionMode
                 resumeSessionId?: string
+                model?: string
             } = {}
             const unknownArgs: string[] = []
 
@@ -36,6 +37,13 @@ export const codexCommand: CommandDefinition = {
                 } else if (arg === '--yolo' || arg === '--dangerously-bypass-approvals-and-sandbox') {
                     options.permissionMode = 'yolo'
                     unknownArgs.push(arg)
+                } else if (arg === '--model') {
+                    const model = commandArgs[++i]
+                    if (!model) {
+                        throw new Error('Missing --model value')
+                    }
+                    options.model = model
+                    unknownArgs.push('--model', model)
                 } else {
                     unknownArgs.push(arg)
                 }

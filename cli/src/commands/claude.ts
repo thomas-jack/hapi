@@ -41,6 +41,13 @@ export const claudeCommand: CommandDefinition = {
             } else if (arg === '--dangerously-skip-permissions') {
                 options.permissionMode = 'bypassPermissions'
                 unknownArgs.push(arg)
+            } else if (arg === '--model') {
+                const model = args[++i]
+                if (!model) {
+                    throw new Error('Missing --model value')
+                }
+                options.model = model
+                unknownArgs.push('--model', model)
             } else if (arg === '--started-by') {
                 options.startedBy = args[++i] as 'runner' | 'terminal'
             } else {

@@ -14,6 +14,7 @@ export const geminiCommand: CommandDefinition = {
                 startedBy?: 'runner' | 'terminal'
                 startingMode?: 'local' | 'remote'
                 permissionMode?: GeminiPermissionMode
+                model?: string
             } = {}
 
             for (let i = 0; i < commandArgs.length; i++) {
@@ -29,6 +30,12 @@ export const geminiCommand: CommandDefinition = {
                     }
                 } else if (arg === '--yolo') {
                     options.permissionMode = 'yolo'
+                } else if (arg === '--model') {
+                    const model = commandArgs[++i]
+                    if (!model) {
+                        throw new Error('Missing --model value')
+                    }
+                    options.model = model
                 }
             }
 

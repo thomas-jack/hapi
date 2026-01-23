@@ -19,6 +19,7 @@ export async function runCodex(opts: {
     codexArgs?: string[];
     permissionMode?: PermissionMode;
     resumeSessionId?: string;
+    model?: string;
 }): Promise<void> {
     const workingDirectory = process.cwd();
     const startedBy = opts.startedBy ?? 'terminal';
@@ -48,6 +49,7 @@ export async function runCodex(opts: {
     const sessionWrapperRef: { current: CodexSession | null } = { current: null };
 
     let currentPermissionMode: PermissionMode = opts.permissionMode ?? 'default';
+    const currentModel = opts.model;
 
     const lifecycle = createRunnerLifecycle({
         session,
@@ -72,7 +74,8 @@ export async function runCodex(opts: {
         logger.debug(`[Codex] User message received with permission mode: ${currentPermissionMode}`);
 
         const enhancedMode: EnhancedMode = {
-            permissionMode: messagePermissionMode ?? 'default'
+            permissionMode: messagePermissionMode ?? 'default',
+            model: currentModel
         };
         const formattedText = formatMessageWithAttachments(message.content.text, message.content.attachments);
         messageQueue.push(formattedText, enhancedMode);
